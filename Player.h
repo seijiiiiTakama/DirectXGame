@@ -4,6 +4,7 @@
 #include "WorldTransform.h"
 #include "Input.h"
 #include "Matrix4x4.h"
+#include "PlayerBullet.h"
 
 
 // 自キャラ
@@ -19,6 +20,10 @@ public: // メンバ関数
 	/// 毎フレーム処理
 	/// </summary>
 	void Update();
+
+	void Rotate();
+
+	void Attack();
 
 	/// <summary>
 	/// 描画
@@ -40,4 +45,8 @@ private: // メンバ変数
 	// キーボード入力
 	Input* input_ = nullptr;
 
+	// 弾
+	PlayerBullet* bullet_ = nullptr;
+
 };
+
