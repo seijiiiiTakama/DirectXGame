@@ -5,12 +5,16 @@
 #include "Input.h"
 #include "Matrix4x4.h"
 #include "PlayerBullet.h"
+#include <list>
 
 
 // 自キャラ
 class Player {
 
 public: // メンバ関数
+	
+	~Player();
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -46,7 +50,7 @@ private: // メンバ変数
 	Input* input_ = nullptr;
 
 	// 弾
-	PlayerBullet* bullet_ = nullptr;
+	std::list<PlayerBullet*> bullets_;
 
 };
 
