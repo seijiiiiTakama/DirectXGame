@@ -27,6 +27,15 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 
 void Player::Update() {
 
+	// デスフラグの立った弾を削除
+	bullets_.remove_if([](PlayerBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
 
@@ -101,14 +110,20 @@ void Player::Attack() {
 
 	if (input_->PushKey(DIK_SPACE)) {
 
-		// 自キャラの座標をコピー
-		//DirectX::XMFLOAT3 position = worldTransform_.translation_;
+		// 弾の速度
+		const float kBulletSpeed = 1.0f;
+		Vector3 velocity(0, 0, kBulletSpeed);
+
+		// 速度ベクトルを時期の向きに合わせて回転させる
+		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(
-		    model_, {worldTransform_.translation_.x, worldTransform_.translation_.y,
-		             worldTransform_.translation_.z}); 
+		    model_,
+		    {worldTransform_.translation_.x, worldTransform_.translation_.y,
+		     worldTransform_.translation_.z},
+		    velocity); 
 
 		// 弾を登録する
 		bullets_.push_back(newBullet);

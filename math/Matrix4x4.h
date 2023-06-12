@@ -25,6 +25,9 @@ Matrix4x4 MakeTranslateMatrix(Vector3 trans);
 // 3次元アフィン変換行列
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& trans);
 
+// ベクトル変換
+Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
+
 Matrix4x4& operator*=(Matrix4x4& m1, const Matrix4x4& m2);
 
 Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2);
