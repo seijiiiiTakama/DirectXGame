@@ -5,6 +5,11 @@
 
 class Enemy {
 
+	enum class Phase {
+		Approach, // 接近する
+		Leave,    // 離脱する
+	};
+
 public: // メンバ関数
 
 	/// <summary>
@@ -16,6 +21,9 @@ public: // メンバ関数
 	/// 毎フレーム処理
 	/// </summary>
 	void Update();
+
+	void ApproachUpdate(Vector3& move);
+	void LeaveUpdate(Vector3& move);
 
 	/// <summary>
 	/// 描画
@@ -30,4 +38,10 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
+
+	// フェーズ
+	Phase phase_ = Phase::Approach;
+
 };
+
+
