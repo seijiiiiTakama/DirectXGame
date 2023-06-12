@@ -7,6 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXGame", "DirectXGame.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{0FD29255-98D5-4F0F-AFBB-BA43836CC402}"
 	ProjectSection(SolutionItems) = preProject
+		Enemy.h = Enemy.h
 		WorldTransformEx.cpp = WorldTransformEx.cpp
 	EndProjectSection
 EndProject
