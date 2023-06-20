@@ -72,10 +72,7 @@ void Player::Update() {
 	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kMoveLimitY);
 
 	// 行列を計算、定数バッファに転送
-	//worldTransform_.UpdateMatrix();
-	worldTransform_.matWorld_ = MakeAffineMatrix(
-	    worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
-	worldTransform_.TransferMatrix();
+	worldTransform_.UpdateMatrix();
 	
 	// キャラクターの座標を画面表示する処理
 	ImGui::Begin(" ");
@@ -128,7 +125,6 @@ void Player::Attack() {
 		// 弾を登録する
 		bullets_.push_back(newBullet);
 	}
-
 }
 
 void Player::Draw(ViewProjection viewProjection) {

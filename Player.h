@@ -29,6 +29,17 @@ public: // メンバ関数
 
 	void Attack();
 
+	Vector3 GetWorldPosition() {
+		// ワールド座標を入れる変数
+		Vector3 worldPos;
+		// ワールド行列の平行移動成分を取得
+		worldPos.x = worldTransform_.translation_.x;
+		worldPos.y = worldTransform_.translation_.y;
+		worldPos.z = worldTransform_.translation_.z;
+
+		return worldPos;
+	};
+
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -51,6 +62,6 @@ private: // メンバ変数
 
 	// 弾
 	std::list<PlayerBullet*> bullets_;
-
+	
 };
 

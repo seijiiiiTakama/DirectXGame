@@ -1,5 +1,6 @@
 ﻿#include "Matrix4x4.h"
 #include <cmath>
+#include <cassert>
 
 Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
 	Matrix4x4 result;
@@ -99,6 +100,15 @@ Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m) {
 	return result;
 }
 
+
+Vector3 Normalize(const Vector3& vector) {
+
+	float length = sqrtf(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+	assert(length);
+	Vector3 dir = {vector.x / length, vector.y / length, vector.z / length};
+	return dir;
+}
+
 Matrix4x4& operator*=(Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 result = {};
 
@@ -119,3 +129,11 @@ Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2) {
 
 	return result *= m2;
 }
+
+//Vector3& operator*=(Vector3& v, float s) {
+//
+//}
+//
+//Vector3 operator*(const Vector3& v, float s) {
+//
+//}

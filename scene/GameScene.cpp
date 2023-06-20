@@ -43,6 +43,9 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向hy法事が参照するビュープロジェクションを指定する（アドレス無し）
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+
+	// 敵キャラに自キャラのアドレスを渡す
+	enemy_->SetPlayer(player_);
 }
 
 void GameScene::Update() {
