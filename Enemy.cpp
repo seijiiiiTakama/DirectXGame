@@ -38,6 +38,15 @@ void Enemy::ApproachInitialize() {
 
 void Enemy::Update() {
 
+	// デスフラグの立った弾を削除
+	bullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+
 	// キャラクターの移動速さ
 	const float kCharacterSpeed = -0.2f;
 
@@ -65,6 +74,7 @@ void Enemy::Update() {
 }
 
 void Enemy::ApproachUpdate(Vector3& move) {
+
 	// 移動（ベクトルを加算）
 	worldTransform_.translation_.z += move.z;
 	// 既定の位置に到達したら離脱
@@ -121,6 +131,9 @@ void Enemy::Fire() {
 
 	// 弾を登録する
 	bullets_.push_back(newBullet);
+
+	// 弾の座標を取得
+	bulletPos_ = newBullet->GetWorldPosition();
 
 }
 

@@ -130,6 +130,23 @@ Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2) {
 	return result *= m2;
 }
 
+Vector3& operator-=(Vector3& v1, const Vector3& v2) { 
+	Vector3 result = {};
+
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+
+	v1 = result;
+	return v1;
+}
+
+Vector3 operator-(const Vector3& v1, const Vector3& v2) { 
+	Vector3 result = v1;
+
+	return result -= v2;
+}
+
 //Vector3& operator*=(Vector3& v, float s) {
 //
 //}

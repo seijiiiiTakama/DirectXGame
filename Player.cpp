@@ -1,6 +1,6 @@
 ﻿#include "Player.h"
 #include "cassert"
-#include "ImGuiManager.h"
+#include <imgui.h>
 
 Player::~Player() { 
 	for (PlayerBullet* bullet : bullets_) {
@@ -75,9 +75,9 @@ void Player::Update() {
 	worldTransform_.UpdateMatrix();
 	
 	// キャラクターの座標を画面表示する処理
-	ImGui::Begin(" ");
+	/*ImGui::Begin(" ");
 	ImGui::Text("Player %f,%f,%f", worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);
-	ImGui::End();
+	ImGui::End();*/
 
 	// 旋回処理
 	Rotate();

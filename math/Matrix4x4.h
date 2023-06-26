@@ -32,9 +32,10 @@ Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
 Vector3 Normalize(const Vector3& vector);
 
 Matrix4x4& operator*=(Matrix4x4& m1, const Matrix4x4& m2);
-
 Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2);
 
+Vector3& operator-=(Vector3& v1, const Vector3& v2);
+Vector3 operator-(const Vector3& v1, const Vector3& v2);
+
 //Vector3& operator*=(Vector3& v, float s);
-//
 //Vector3 operator*(const Vector3& v, float s);

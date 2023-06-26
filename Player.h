@@ -40,6 +40,12 @@ public: // メンバ関数
 		return worldPos;
 	};
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void OnCollision(){};
+	// 弾リストを取得
+	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
+	Vector3 bulletPos_ = {};
+
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -62,6 +68,7 @@ private: // メンバ変数
 
 	// 弾
 	std::list<PlayerBullet*> bullets_;
+	
 	
 };
 

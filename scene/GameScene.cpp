@@ -2,6 +2,9 @@
 #include "TextureManager.h"
 #include <cassert>
 #include "AxisIndicator.h"
+#include "ImGuiManager.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 GameScene::GameScene() {}
 
@@ -73,6 +76,87 @@ void GameScene::Update() {
 		// ビュープロジェクション行列の更新と転送
 		viewProjection_.UpdateMatrix();
 	}
+
+	// 弾の当たり判定
+	CheckAllCollisions();
+}
+
+void GameScene::CheckAllCollisions() {
+
+	// 判定対象AとBの座標
+	Vector3 posA, posB;
+
+	// 自弾リストの取得
+	 const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	// 敵弾リストの取得
+	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+
+#pragma region 自キャラと敵弾の当たり判定
+	// 自キャラの座標
+	posA = player_->GetWorldPosition();
+	// 自キャラと敵弾全ての当たり判定
+	for (EnemyBullet* bullet : enemyBullets) {
+		// 敵弾の座標
+		posB = bullet->GetWorldPosition();
+		// 座標AとBの距離を求める
+		// 弾と弾の交差判定
+		if ((posB.x - posA.x) * (posB.x - posA.x) +
+			(posB.y - posA.y) * (posB.y - posA.y) +
+		    (posB.z - posA.z) * (posB.z - posA.z) <=
+		    (1 + 1) * (1 + 1)) {
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+#pragma endregion
+
+#pragma region 自弾と敵キャラの当たり判定
+	// 敵キャラの座標
+	posA = enemy_->GetWorldPosition();
+	// 敵キャラと自弾全ての当たり判定
+	for (PlayerBullet* bullet : playerBullets) {
+		// 自弾の座標
+		posB = bullet->GetWorldPosition();
+		// 座標AとBの距離を求める
+		// 弾と弾の交差判定
+		if ((posB.x - posA.x) * (posB.x - posA.x) +
+			(posB.y - posA.y) * (posB.y - posA.y) +
+		    (posB.z - posA.z) * (posB.z - posA.z) <=
+		    (1 + 1) * (1 + 1)) {
+			// 敵キャラの衝突時コールバックを呼び出す
+			enemy_->OnCollision();
+			// 自弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+#pragma endregion
+
+#pragma region 自弾と敵弾の当たり判定
+	for (PlayerBullet* bullet1 : playerBullets) {
+		// 自キャラの座標
+		posA = bullet1->GetWorldPosition();
+		// 自キャラと敵弾全ての当たり判定
+		for (EnemyBullet* bullet2 : enemyBullets) {
+			// 敵弾の座標
+			posB = bullet2->GetWorldPosition();
+			// 座標AとBの距離を求める
+			// 弾と弾の交差判定
+			if ((posB.x - posA.x) * (posB.x - posA.x) +
+				(posB.y - posA.y) * (posB.y - posA.y) +
+			    (posB.z - posA.z) * (posB.z - posA.z) <=
+			    (1 + 1) * (1 + 1)) {
+				// 自キャラの衝突時コールバックを呼び出す
+				bullet1->OnCollision();
+				// 敵弾の衝突時コールバックを呼び出す
+				bullet2->OnCollision();
+			}
+		}
+	}
+#pragma endregion
+
+	
 }
 
 void GameScene::Draw() {
