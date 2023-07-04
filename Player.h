@@ -18,7 +18,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model, uint32_t textureHandle);
+	void Initialize(Model* model, uint32_t textureHandle, Vector3& position);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -33,9 +33,9 @@ public: // メンバ関数
 		// ワールド座標を入れる変数
 		Vector3 worldPos;
 		// ワールド行列の平行移動成分を取得
-		worldPos.x = worldTransform_.translation_.x;
-		worldPos.y = worldTransform_.translation_.y;
-		worldPos.z = worldTransform_.translation_.z;
+		worldPos.x = worldTransform_.matWorld_.m[3][0];
+		worldPos.y = worldTransform_.matWorld_.m[3][1];
+		worldPos.z = worldTransform_.matWorld_.m[3][2];
 
 		return worldPos;
 	};
@@ -45,6 +45,11 @@ public: // メンバ関数
 	// 弾リストを取得
 	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 	Vector3 bulletPos_ = {};
+
+	/// <summary>
+	/// 親となるワールドトランフォームをセット
+	/// </summary>
+	void SetParent(const WorldTransform* parent);
 
 	/// <summary>
 	/// 描画

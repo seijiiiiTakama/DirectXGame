@@ -7,6 +7,9 @@ struct Matrix4x4 final {
 	float m[4][4];
 };
 
+// 逆行列
+Matrix4x4 Inverse(const Matrix4x4& m);
+
 // 回転移動行列
 Matrix4x4 MakeScaleMatrix(const Vector3& scale);
 

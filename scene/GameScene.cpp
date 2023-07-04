@@ -32,10 +32,18 @@ void GameScene::Initialize() {
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
+	// レールカメラの初期化
+	railCamera_ = new RailCamera();
+	railCamera_->Initialize({0, 0, 0}, {0, 0, 0});
+
 	// 自キャラの生成
 	player_ = new Player();
+	// 自キャラとレールカメラの親子関係を結ぶ
+	player_->SetParent(&railCamera_->GetWorldTransform());
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_);
+	Vector3 playerPosition(0, 0, 30);
+	player_->Initialize(model_, textureHandle_, playerPosition);
+
 	// 敵キャラの生成
 	enemy_ = new Enemy();
 	// 敵キャラの初期化
@@ -57,6 +65,9 @@ void GameScene::Initialize() {
 	skydome_ = new Skydome();
 	// 天球の初期化
 	skydome_->Initialize(modelSkydome_, {0, 0, 0});
+
+	
+	
 }
 
 void GameScene::Update() {
@@ -81,8 +92,10 @@ void GameScene::Update() {
 		// ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
 	} else {
-		// ビュープロジェクション行列の更新と転送
-		viewProjection_.UpdateMatrix();
+		// ビュー行列とプロジェクション行列をコピー
+		viewProjection_.matView = railCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
 	}
 
 	// 弾の当たり判定
@@ -90,6 +103,11 @@ void GameScene::Update() {
 
 	// 天球の更新
 	skydome_->Update();
+
+	// レールカメラの更新
+	railCamera_->Update();
+	
+
 }
 
 void GameScene::CheckAllCollisions() {

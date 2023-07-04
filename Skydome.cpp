@@ -12,6 +12,7 @@ void Skydome::Initialize(Model* model, const Vector3& position) {
 	worldTransform_.translation_ = position;
 
 	// ビュープロジェクションの初期化
+	viewProjection_.Initialize();
 }
 
 void Skydome::Update() {

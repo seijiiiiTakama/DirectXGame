@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include <list>
 #include "Skydome.h"
+#include "RailCamera.h"
 
 
 /// <summary>
@@ -83,4 +84,7 @@ private: // メンバ変数
 	Skydome* skydome_ = nullptr;
 	// 3Dモデル
 	Model* modelSkydome_ = nullptr;
+
+	// レールカメラ
+	RailCamera* railCamera_ = nullptr;
 };
