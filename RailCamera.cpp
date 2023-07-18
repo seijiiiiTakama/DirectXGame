@@ -13,7 +13,7 @@ void RailCamera::Initialize(const Vector3& position, const Vector3& rotate) {
 
 void RailCamera::Update() {
 
-	worldTransform_.translation_.z += -0.1f;
+	//worldTransform_.translation_.z += -0.1f;
 	//worldTransform_.rotation_.y += 0.001f;
 
 	// ワールド行列再計算

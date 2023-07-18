@@ -87,4 +87,7 @@ private: // メンバ変数
 
 	// レールカメラ
 	RailCamera* railCamera_ = nullptr;
+
+	// テクスチャハンドル
+	uint32_t textureReticle_ = 0u;
 };
