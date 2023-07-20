@@ -6,6 +6,7 @@
 #include "Matrix4x4.h"
 #include "PlayerBullet.h"
 #include <list>
+#include "Sprite.h"
 
 
 // 自キャラ
@@ -18,7 +19,8 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model, uint32_t textureHandle, Vector3& position);
+	void Initialize(
+	    Model* model, uint32_t textureHandle, uint32_t textureReticle, Vector3& position);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -56,6 +58,11 @@ public: // メンバ関数
 	/// </summary>
 	void Draw(ViewProjection viewProjection);
 
+	/// <summary>
+	/// UI描画
+	/// </summary>
+	void DrawUI();
+
 private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
@@ -63,6 +70,8 @@ private: // メンバ変数
 
 	// ワールド変換データ
 	WorldTransform worldTransform_;
+	// ビュープロジェクション
+	ViewProjection viewProjection_;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -74,6 +83,11 @@ private: // メンバ変数
 	// 弾
 	std::list<PlayerBullet*> bullets_;
 	
-	
+	// 3Dレティクル用ワールドトランスフォーム
+	WorldTransform worldTransform3DReticle_;
+	// 2Dレティクル用スプライト
+	Sprite* sprite2DReticle_ = nullptr;
+	// テクスチャハンドル
+	uint32_t textureReticle_ = 0u;
 };
 

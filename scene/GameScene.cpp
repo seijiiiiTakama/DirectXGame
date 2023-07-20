@@ -29,6 +29,8 @@ void GameScene::Initialize() {
 
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("sample.png");
+	// レティクルのテクスチャ
+	textureReticle_ = TextureManager::Load("target.png");
 
 	// 3Dモデルの生成
 	model_ = Model::Create();
@@ -46,8 +48,7 @@ void GameScene::Initialize() {
 	player_->SetParent(&railCamera_->GetWorldTransform());
 	// 自キャラの初期化
 	Vector3 playerPosition(0, 0, 30);
-	player_->Initialize(model_, textureHandle_, playerPosition);
-
+	player_->Initialize(model_, textureHandle_, textureReticle_, playerPosition);
 	// 敵
 	LoadEnemyPopData();
 
@@ -293,7 +294,7 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
-
+	player_->DrawUI();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

@@ -117,4 +117,7 @@ private: // メンバ変数
 	// 待機中フラグ
 	bool waitFlag_;
 	int32_t waitTime_;
+
+	// テクスチャハンドル
+	uint32_t textureReticle_ = 0u;
 };
