@@ -56,5 +56,5 @@ private:
 	bool isDead_ = false;
 
 	// 弾
-	std::list<EnemyBullet*> bullets_;
+	//std::list<EnemyBullet*> bullets_;
 };

@@ -1,4 +1,4 @@
-﻿#pragma
+﻿#pragma once
 
 #include "Model.h"
 #include "WorldTransform.h"
@@ -10,6 +10,8 @@
 // 自機キャラの前方宣言
 class Player;
 
+class GameScene;
+
 class Enemy {
 
 	enum class Phase {
@@ -19,12 +21,12 @@ class Enemy {
 
 public: // メンバ関数
 
-	~Enemy();
+	//~Enemy();
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model);
+	void Initialize(Model* model, Vector3 pos, Vector3 velocity);
 
 	void ApproachInitialize();
 
@@ -65,6 +67,10 @@ public: // メンバ関数
 	/// </summary>
 	void Draw(ViewProjection viewProjection);
 
+	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+
+	bool IsDead() const { return isDead_; }
+
 private: // メンバ変数
 
 	// ワールド変換データ
@@ -89,7 +95,13 @@ private: // メンバ変数
 	Vector3 enemyPos_;
 	Vector3 difference_;
 
-	
+	// ゲームシーン
+	GameScene* gameScene_ = nullptr;
+
+	// デスフラグ
+	bool isDead_ = false;
+
+	Vector3 kCharacterSpeed_;
 };
 
 

@@ -64,8 +64,8 @@ void Player::Update() {
 	worldTransform_.translation_.z += move.z;
 
 	// 移動限界座標
-	const float kMoveLimitX = 32;
-	const float kMoveLimitY = 18;
+	const float kMoveLimitX = 20;
+	const float kMoveLimitY = 10;
 
 	// 範囲を超えない世界
 	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLimitX);

@@ -2,14 +2,13 @@
 #include "cassert"
 #include "Player.h"
 #include "cmath"
+#include "GameScene.h"
 
-Enemy::~Enemy() {
-	for (EnemyBullet* bullet : bullets_) {
-		delete bullet;
-	}
-}
+//Enemy::~Enemy() {
+//	
+//}
 
-void Enemy::Initialize(Model* model) {
+void Enemy::Initialize(Model* model, Vector3 pos, Vector3 velocity) {
 
 	// NULLポインタチェック
 	assert(model);
@@ -22,12 +21,15 @@ void Enemy::Initialize(Model* model) {
 
 	textureHandle_ = TextureManager::Load("white1x1.png");
 
-	worldTransform_.translation_.x = 3;
-	worldTransform_.translation_.y = 5;
-	worldTransform_.translation_.z = 100;
+	worldTransform_.translation_.x = pos.x;
+	worldTransform_.translation_.y = pos.y;
+	worldTransform_.translation_.z = pos.z;
+	kCharacterSpeed_ = velocity;
 
 	// 接近フェーズ初期化
 	ApproachInitialize();
+
+	
 }
 
 void Enemy::ApproachInitialize() {
@@ -38,20 +40,8 @@ void Enemy::ApproachInitialize() {
 
 void Enemy::Update() {
 
-	// デスフラグの立った弾を削除
-	bullets_.remove_if([](EnemyBullet* bullet) {
-		if (bullet->IsDead()) {
-			delete bullet;
-			return true;
-		}
-		return false;
-	});
-
-	// キャラクターの移動速さ
-	const float kCharacterSpeed = -0.2f;
-
 	// キャラクターの移動ベクトル
-	Vector3 move = {kCharacterSpeed, kCharacterSpeed, kCharacterSpeed};
+	Vector3 move = kCharacterSpeed_;
 
 	// 行列を計算、定数バッファに転送
 	worldTransform_.UpdateMatrix();
@@ -65,12 +55,6 @@ void Enemy::Update() {
 		LeaveUpdate(move);
 		break;
 	}
-	
-	// 弾更新
-	for (EnemyBullet* bullet : bullets_) {
-		bullet->Update();
-	}
-	
 }
 
 void Enemy::ApproachUpdate(Vector3& move) {
@@ -78,8 +62,8 @@ void Enemy::ApproachUpdate(Vector3& move) {
 	// 移動（ベクトルを加算）
 	worldTransform_.translation_.z += move.z;
 	// 既定の位置に到達したら離脱
-	if (worldTransform_.translation_.z < 0.0f) {
-		//phase_ = Phase::Leave;
+	if (worldTransform_.translation_.z < 50.0f) {
+		phase_ = Phase::Leave;
 	}
 
 	// 発射タイマーカウントダウン
@@ -129,12 +113,7 @@ void Enemy::Fire() {
 	EnemyBullet* newBullet = new EnemyBullet();
 	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
 
-	// 弾を登録する
-	bullets_.push_back(newBullet);
-
-	// 弾の座標を取得
-	bulletPos_ = newBullet->GetWorldPosition();
-
+	gameScene_->AddEnemyBullet(newBullet);
 }
 
 void Enemy::Draw(ViewProjection viewProjection) {
@@ -142,9 +121,9 @@ void Enemy::Draw(ViewProjection viewProjection) {
 	// 3Dモデルを描画
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 
-	// 弾描画
-	for (EnemyBullet* bullet : bullets_) {
-		bullet->Draw(viewProjection);
-	}
+	//// 弾描画
+	//for (EnemyBullet* bullet : bullets_) {
+	//	bullet->Draw(viewProjection);
+	//}
 
 }
