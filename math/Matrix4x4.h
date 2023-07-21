@@ -28,6 +28,14 @@ Matrix4x4 MakeTranslateMatrix(Vector3 trans);
 // 3次元アフィン変換行列
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& trans);
 
+// ビューポート変換
+Matrix4x4 MakeViewportMatrix(
+    float left, float top, float width, float height, float minDepth, float maxDepth);
+
+Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
+
+float Dot(const Vector3& v1, const Vector3& v2);
+
 // ベクトル変換
 Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
 
@@ -50,5 +58,6 @@ Vector3 operator*(const Vector3& v, float s);
 Vector3& operator*=(Vector3& v1, Vector3& v2);
 Vector3 operator*(const Vector3& v1, Vector3& v2);
 
-Vector3& operator+=(Vector3& v1, Vector3& v2);
-Vector3 operator+(const Vector3& v1, Vector3& v2);
+Vector3 operator+=(Vector3& v1, const Vector3& v2);
+Vector3 operator+(const Vector3& v1, const Vector3& v2);
+

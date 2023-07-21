@@ -25,7 +25,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	void Update(ViewProjection viewProjection);
 
 	void Rotate();
 
@@ -40,6 +40,17 @@ public: // メンバ関数
 		worldPos.z = worldTransform_.matWorld_.m[3][2];
 
 		return worldPos;
+	};
+
+	Vector3 Get3DReticlePosition() {
+		// ワールド座標を入れる変数
+		Vector3 reticlePos;
+		// ワールド行列の平行移動成分を取得
+		reticlePos.x = worldTransform3DReticle_.matWorld_.m[3][0];
+		reticlePos.y = worldTransform3DReticle_.matWorld_.m[3][1];
+		reticlePos.z = worldTransform3DReticle_.matWorld_.m[3][2];
+
+		return reticlePos;
 	};
 
 	// 衝突を検出したら呼び出されるコールバック関数

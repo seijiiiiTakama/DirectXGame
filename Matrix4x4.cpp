@@ -183,6 +183,23 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 	return result;
 }
 
+
+Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
+	Matrix4x4 result;
+	for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < 4; i++) {
+			result.m[j][i] = m1.m[j][0] * m2.m[0][i] + m1.m[j][1] * m2.m[1][i] +
+			                 m1.m[j][2] * m2.m[2][i] + m1.m[j][3] * m2.m[3][i];
+		}
+	}
+	return result;
+}
+
+float Dot(const Vector3& v1, const Vector3& v2) {
+	float result = {v1.x * v2.x + v1.y * v2.y + v1.z * v2.z};
+	return result;
+}
+
 Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m) {
 	Vector3 result{
 	    v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0],
@@ -312,18 +329,17 @@ Vector3 operator*(const Vector3& v1, Vector3& v2) {
 	return result *= v2;
 }
 
-Vector3& operator+=(Vector3& v1, Vector3& v2) {
-	Vector3 result = {};
+Vector3 operator+=(Vector3& v1,const Vector3& v2) {
+	Vector3 result;
 
 	result.x = v1.x + v2.x;
 	result.y = v1.y + v2.y;
 	result.z = v1.z + v2.z;
 
-	v1 = result;
-	return v1;
+	return result;
 }
 
-Vector3 operator+(const Vector3& v1, Vector3& v2) {
+Vector3 operator+(const Vector3& v1, const Vector3& v2) {
 	Vector3 result = v1;
 
 	return result += v2;

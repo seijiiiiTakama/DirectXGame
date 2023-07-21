@@ -74,7 +74,7 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	
 	// 自キャラの更新
-	player_->Update();
+	player_->Update(viewProjection_);
 
 	// デスフラグの立った敵を削除
 	enemys_.remove_if([](Enemy* enemy) {
@@ -223,7 +223,7 @@ void GameScene::AddEnemy(Vector3 pos) {
 	// 弾の生成
 	Enemy* newEnemy = new Enemy();
 	// 敵の速度
-	const float kEnemySpeed = -0.3f;
+	const float kEnemySpeed = -0.1f;
 	Vector3 velocity(kEnemySpeed, kEnemySpeed, kEnemySpeed);
 	// 敵の初期化
 	newEnemy->Initialize(model_, pos, velocity);
